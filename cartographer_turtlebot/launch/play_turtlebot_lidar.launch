@@ -1,0 +1,21 @@
+<launch>
+  <arg name="configuration_basename"/>
+
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="-configuration_directory $(find cartographer_turtlebot)/configuration_files -configuration_basename $(arg configuration_basename)"
+      output="screen">
+    <remap from="scan" to="/scan" />
+  </node>
+  <node name="tf_remove_frames" pkg="cartographer_ros" type="tf_remove_frames.py">
+
+     <remap from="tf_out" to="/tf"/>
+     <rosparam param="remove_frames">
+       - map
+       - odom_combined
+     </rosparam>
+  </node>
+  <node pkg="rosbag" type="play" name="rosbag_play"
+       args="--clock /tmp/test_carto_2018-01-20-13-56-40.bag" />
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find cartographer_turtlebot)/configuration_files/demo_turtlebot.rviz" />
+</launch>
