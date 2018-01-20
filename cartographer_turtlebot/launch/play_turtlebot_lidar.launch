@@ -1,5 +1,6 @@
 <launch>
   <arg name="configuration_basename"/>
+  <arg name="bag_filename"/>
 
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="-configuration_directory $(find cartographer_turtlebot)/configuration_files -configuration_basename $(arg configuration_basename)"
@@ -15,7 +16,7 @@
      </rosparam>
   </node>
   <node pkg="rosbag" type="play" name="rosbag_play"
-       args="--clock /tmp/test_carto_2018-01-20-13-56-40.bag" />
+       args="--clock $(arg bag_filename)" />
   <node name="rviz" pkg="rviz" type="rviz" required="true"
       args="-d $(find cartographer_turtlebot)/configuration_files/demo_turtlebot.rviz" />
 </launch>

@@ -1,5 +1,7 @@
 <launch>
+  <arg name="bag_filename"/>
   <include file="$(find cartographer_turtlebot)/launch/play_turtlebot_lidar.launch">
     <arg name="configuration_basename" value="turtlebot_urg_lidar_2d.lua" />
+    <arg name="bag_filename" value="$(arg bag_filename)" />
   </include>
 </launch>
